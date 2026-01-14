@@ -1,50 +1,51 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- 
+Sync Impact Report:
+- Version change: 1.0.0 → 1.1.0
+- Modified principles: Added security-focused principles relevant to full-stack application
+- Added sections: Authentication and Database principles
+- Removed sections: None
+- Templates requiring updates: N/A
+- Follow-up TODOs: None
+-->
+# Hackathon II Todo App Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Security-First Architecture
+All features must implement proper authentication and authorization from the start; JWT tokens must be validated for every request; User data isolation is mandatory - no cross-user data access allowed.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Full-Stack Consistency
+Frontend and backend must use consistent technology stacks (Next.js 16+, TypeScript, FastAPI, SQLModel); Shared specifications must be referenced across both layers (@specs/ references); Same BETTER_AUTH_SECRET must be used in both frontend and backend.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Spec-Driven Development (NON-NEGOTIABLE)
+All features must be implemented according to specifications in @specs/ directory; No implementation without corresponding spec documentation; Changes to implementation must be reflected in specs.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Test-First Approach
+TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced; All CRUD operations must have corresponding tests.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Responsive Design and User Experience
+All UI components must be responsive using Tailwind CSS; User interface must follow modern design principles; Task dashboard must provide intuitive CRUD operations.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Authentication Requirements
+- Better Auth with JWT plugin for user management
+- Frontend API client automatically attaches JWT to every request
+- FastAPI middleware verifies JWT, extracts user_id, enforces ownership on all operations
+- No request without valid token or wrong user_id allowed
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Database and API Standards
+- SQLModel for ORM operations
+- Neon Serverless PostgreSQL for persistent storage
+- REST API endpoints following specified patterns with proper authentication
+- All tasks must belong to specific user with strict isolation
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+- Monorepo structure with frontend/ and backend/ directories
+- Reference relevant specs throughout implementation
+- Prioritize security and correct user isolation
+- Use TypeScript for type safety in frontend
+- Follow App Router patterns in Next.js
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+Constitution supersedes all other practices; Amendments require documentation and approval; All PRs/reviews must verify compliance with security and authentication requirements; Complexity must be justified with reference to specs.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.1.0 | **Ratified**: 2025-01-08 | **Last Amended**: 2026-01-08

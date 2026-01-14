@@ -1,0 +1,17 @@
+name: hackathon-todo
+version: "1.0"
+structure:
+  specs_dir: specs
+  features_dir: specs/features
+  api_dir: specs/api
+  database_dir: specs/database
+  ui_dir: specs/ui
+phases:
+  phase1-console:
+    name: Phase I - Console Application
+    features: []
+  phase2-web:
+    name: Phase II - Full-Stack Web Application
+    features:
+      - task-crud
+      - authentication

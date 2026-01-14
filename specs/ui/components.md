@@ -1,194 +1,101 @@
-# Components Specification
+# UI Components
 
-## Navbar Component
+## Overview
+This document outlines the reusable UI components needed for the Hackathon II Todo App. All components will be built with Tailwind CSS for consistent styling.
 
-- **Purpose**: Navigation between application sections
-- **Props** (typed):
-  - `user: User | null` - Current user information
-  - `onLogout: () => void` - Callback for logout action
-- **State responsibility**: None (pure UI component)
-- **Server vs Client component**: Client component (handles logout action)
-- **Accessibility features**: 
-  - ARIA labels for navigation elements
-  - Proper focus management
-  - Keyboard navigation support
-- **Responsive behavior**:
-  - Desktop: Horizontal navigation with user profile dropdown
-  - Mobile: Hamburger menu that expands to vertical list
-- **Suggested Tailwind classes**: `bg-white border-b border-gray-200 shadow-sm`
-- **UX micro-interactions**:
-  - Hover: Subtle background color change
-  - Active: Highlighted current page
-  - Dropdown: Smooth open/close animation
+## Component List
 
-## Task List Component
+### Header
+**Description**: Navigation header component that appears on most pages
+**Props**:
+- `user`: Object containing user information (name, email)
+- `onLogout`: Function to handle logout
+**Features**: Displays user info and logout button
 
-- **Purpose**: Display a list of tasks with filtering and sorting options
-- **Props** (typed):
-  - `tasks: Task[]` - Array of tasks to display
-  - `onTaskUpdate: (task: Task) => void` - Callback when task is updated
-  - `onTaskDelete: (taskId: string) => void` - Callback when task is deleted
-  - `isLoading: boolean` - Whether data is loading
-- **State responsibility**: None (pure display component)
-- **Server vs Client component**: Client component (handles UI interactions)
-- **Accessibility features**:
-  - Proper heading hierarchy
-  - ARIA roles for list and list items
-  - Keyboard navigation for task actions
-- **Responsive behavior**:
-  - Desktop: Grid layout with multiple columns
-  - Mobile: Single column list with swipe actions
-- **Suggested Tailwind classes**: `grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4`
-- **UX micro-interactions**:
-  - Hover: Subtle shadow increase
-  - Loading: Skeleton placeholders
-  - Empty state: Friendly illustration with call-to-action
+### AuthLayout
+**Description**: Wrapper layout for authentication pages (signup/signin)
+**Props**:
+- `children`: Child components to render inside the layout
+**Features**: Centered card layout with branding
 
-## Task Item Component
+### TaskCard
+**Description**: Displays a single task with title, description, and completion status
+**Props**:
+- `task`: Task object with id, title, description, completed status
+- `onToggleComplete`: Function to handle completion toggle
+- `onEdit`: Function to handle edit action
+- `onDelete`: Function to handle delete action
+**Features**: Shows task details, completion checkbox, edit/delete buttons
 
-- **Purpose**: Display individual task with title, description, and status
-- **Props** (typed):
-  - `task: Task` - The task to display
-  - `onToggleComplete: (taskId: string) => void` - Toggle completion status
-  - `onEdit: (task: Task) => void` - Open edit form
-  - `onDelete: (taskId: string) => void` - Delete the task
-- **State responsibility**: None (pure display component)
-- **Server vs Client component**: Client component (handles UI interactions)
-- **Accessibility features**:
-  - Proper checkbox labeling for completion
-  - ARIA attributes for status changes
-  - Focus management for action buttons
-- **Responsive behavior**:
-  - Desktop: Full information display
-  - Mobile: Condensed view with action icons
-- **Suggested Tailwind classes**: `bg-white rounded-lg shadow p-4 flex items-start`
-- **UX micro-interactions**:
-  - Hover: Slight elevation increase
-  - Complete: Strikethrough animation
-  - Delete: Confirmation modal with animation
+### TaskList
+**Description**: Container for displaying multiple TaskCards
+**Props**:
+- `tasks`: Array of task objects
+- `onToggleComplete`: Function to handle completion toggle
+- `onEdit`: Function to handle edit action
+- `onDelete`: Function to handle delete action
+**Features**: Renders multiple TaskCards, handles loading states
 
-## Task Form Component
+### TaskForm
+**Description**: Form for creating or editing tasks
+**Props**:
+- `task`: Optional task object (for editing)
+- `onSubmit`: Function to handle form submission
+- `onCancel`: Function to handle cancel action
+**Features**: Input fields for title and description, validation, submit/cancel buttons
 
-- **Purpose**: Create or edit a task with title, description, and other properties
-- **Props** (typed):
-  - `initialData?: Task` - Initial values for editing (optional)
-  - `onSubmit: (task: Omit<Task, 'id'> | Partial<Task>) => void` - Submit handler
-  - `onCancel: () => void` - Cancel handler
-- **State responsibility**: Form state management (title, description, etc.)
-- **Server vs Client component**: Client component (handles form state)
-- **Accessibility features**:
-  - Proper form labeling
-  - Error message association
-  - Focus management after submission
-- **Responsive behavior**:
-  - Desktop: Full-width form with multiple fields
-  - Mobile: Single-column layout with appropriate spacing
-- **Suggested Tailwind classes**: `bg-white rounded-lg shadow p-6`
-- **UX micro-interactions**:
-  - Input focus: Subtle border color change
-  - Validation: Real-time feedback
-  - Submit: Loading state with spinner
+### Button
+**Description**: Reusable button component with consistent styling
+**Props**:
+- `variant`: String for button style ('primary', 'secondary', 'danger')
+- `onClick`: Function to handle click
+- `disabled`: Boolean to disable the button
+- `children`: Content to display inside the button
+**Features**: Different styling variants, disabled state
 
-## Auth Forms Component (Login/Register)
+### Input
+**Description**: Reusable input component with consistent styling
+**Props**:
+- `label`: String for input label
+- `type`: String for input type ('text', 'email', 'password', etc.)
+- `value`: Current input value
+- `onChange`: Function to handle value changes
+- `error`: Optional error message to display
+**Features**: Label, input field, error message display
 
-- **Purpose**: Handle user authentication and registration
-- **Props** (typed):
-  - `type: 'login' | 'register'` - Form type to display
-  - `onSubmit: (credentials: {email: string, password: string, name?: string}) => void` - Submit handler
-  - `onSwitchMode: () => void` - Switch between login/register
-- **State responsibility**: Form inputs (email, password, name)
-- **Server vs Client component**: Client component (handles form state)
-- **Accessibility features**:
-  - Proper form labeling
-  - Error message association
-  - Focus management after submission
-- **Responsive behavior**:
-  - Desktop: Centered card with appropriate width
-  - Mobile: Full-width card with proper spacing
-- **Suggested Tailwind classes**: `bg-white rounded-xl shadow-lg p-8 max-w-md w-full`
-- **UX micro-interactions**:
-  - Input focus: Subtle border color change
-  - Validation: Real-time feedback
-  - Submit: Loading state with spinner
+### Select
+**Description**: Reusable select dropdown component
+**Props**:
+- `label`: String for select label
+- `value`: Current selected value
+- `onChange`: Function to handle selection changes
+- `options`: Array of option objects with value and label
+- `error`: Optional error message to display
+**Features**: Label, dropdown, error message display
 
-## Loading/Errors Component
+### Modal
+**Description**: Reusable modal component for dialogs
+**Props**:
+- `isOpen`: Boolean to control modal visibility
+- `onClose`: Function to handle modal close
+- `title`: String for modal title
+- `children`: Content to display inside the modal
+**Features**: Overlay, centered content, close functionality
 
-- **Purpose**: Display loading states and error messages consistently
-- **Props** (typed):
-  - `isLoading: boolean` - Whether to show loading state
-  - `error?: string | null` - Error message to display (optional)
-  - `size?: 'sm' | 'md' | 'lg'` - Size variant (optional, default 'md')
-- **State responsibility**: None (pure display component)
-- **Server vs Client component**: Client component (display-only)
-- **Accessibility features**:
-  - ARIA live regions for dynamic updates
-  - Proper role attributes for loading indicators
-- **Responsive behavior**: Consistent across all screen sizes
-- **Suggested Tailwind classes**: `flex justify-center items-center`
-- **UX micro-interactions**: Smooth transitions between states
+### LoadingSpinner
+**Description**: Visual indicator for loading states
+**Props**: None
+**Features**: Animated spinner to indicate loading
 
-## Modals Component
+### Alert
+**Description**: Display messages to the user (success, error, warning)
+**Props**:
+- `type`: String for alert type ('success', 'error', 'warning', 'info')
+- `message`: String for the alert message
+**Features**: Different styling for different message types
 
-- **Purpose**: Display important information or confirmations in an overlay
-- **Props** (typed):
-  - `isOpen: boolean` - Whether modal is visible
-  - `title: string` - Modal title
-  - `children: React.ReactNode` - Modal content
-  - `onClose: () => void` - Close handler
-  - `actions?: React.ReactNode` - Action buttons (optional)
-- **State responsibility**: None (controlled component)
-- **Server vs Client component**: Client component (handles UI interactions)
-- **Accessibility features**:
-  - Proper focus trapping
-  - ARIA attributes for modal
-  - Escape key to close
-- **Responsive behavior**:
-  - Desktop: Centered modal with fixed width
-  - Mobile: Full-width modal with appropriate padding
-- **Suggested Tailwind classes**: `fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center`
-- **UX micro-interactions**:
-  - Open/close: Fade and scale animation
-  - Background: Dim effect
-
-## Buttons Component
-
-- **Purpose**: Consistent button styling across the application
-- **Props** (typed):
-  - `variant: 'primary' | 'secondary' | 'danger' | 'ghost'` - Button style
-  - `size: 'sm' | 'md' | 'lg'` - Button size
-  - `isLoading?: boolean` - Show loading state (optional)
-  - `disabled?: boolean` - Disable button (optional)
-  - `children: React.ReactNode` - Button content
-  - `onClick: () => void` - Click handler
-- **State responsibility**: None (pure display component)
-- **Server vs Client component**: Client component (handles click)
-- **Accessibility features**:
-  - Proper button semantics
-  - Focus management
-  - ARIA attributes for loading state
-- **Responsive behavior**: Consistent across all screen sizes
-- **Suggested Tailwind classes**: `px-4 py-2 rounded font-medium`
-- **UX micro-interactions**:
-  - Hover: Subtle color change
-  - Active: Slight press effect
-  - Loading: Spinner with disabled appearance
-
-## Alerts Component
-
-- **Purpose**: Display important notifications to the user
-- **Props** (typed):
-  - `type: 'success' | 'error' | 'warning' | 'info'` - Alert type
-  - `message: string` - Alert message
-  - `isVisible: boolean` - Whether alert is visible
-  - `onDismiss?: () => void` - Dismiss handler (optional)
-- **State responsibility**: None (controlled component)
-- **Server vs Client component**: Client component (handles UI interactions)
-- **Accessibility features**:
-  - ARIA live regions for dynamic updates
-  - Proper role attributes
-  - Focus management if dismissible
-- **Responsive behavior**: Full-width on mobile, constrained width on desktop
-- **Suggested Tailwind classes**: `p-4 rounded-lg flex items-start`
-- **UX micro-interactions**:
-  - Show/hide: Slide animation
-  - Dismiss: Fade out effect
+## Styling Notes
+- All components use Tailwind CSS utility classes for styling
+- Consistent color palette and typography throughout the application
+- Responsive design principles applied to all components
+- Accessibility considerations (keyboard navigation, screen readers) implemented

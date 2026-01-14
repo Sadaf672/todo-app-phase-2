@@ -1,12 +1,21 @@
-// frontend/types/task.ts
-
 export interface Task {
-  id: string;
+  id: number;
+  user_id: string;
   title: string;
-  description: string;
+  description?: string;
   completed: boolean;
-  dueDate: string; // ISO date string
-  priority: 'low' | 'medium' | 'high';
-  createdAt?: string;
-  updatedAt?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TaskCreate {
+  title: string;
+  description?: string;
+  completed: boolean;
+}
+
+export interface TaskUpdate {
+  title?: string;
+  description?: string;
+  completed?: boolean;
 }
