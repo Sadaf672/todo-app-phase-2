@@ -161,3 +161,13 @@ dmypy.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+
+
+# Next.js
+.next/
+out/
+.next/cache/
+
+# Dependencies
+node_modules/
