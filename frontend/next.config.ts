@@ -1,11 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // ✅ Next 16 correct replacement
-  serverExternalPackages: [],
+  // Enable experimental Turbopack features if needed
+  experimental: {
+    // Only enable turbopack in development if needed
+    // turbopack: {},
+  },
 
-  // ✅ Required to avoid Turbopack vs Webpack error
-  turbopack: {},
+  // Support external packages if needed
+  serverExternalPackages: [],
 };
 
 export default nextConfig;

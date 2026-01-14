@@ -76,6 +76,16 @@ export default function DashboardPage() {
     }
   };
 
+  const handleSubmitTask = async (taskData: TaskCreate | TaskUpdate) => {
+    if (editingTask) {
+      // If we're editing, taskData will be TaskUpdate
+      await handleUpdateTask(taskData as TaskUpdate);
+    } else {
+      // If we're creating, taskData will be TaskCreate
+      await handleCreateTask(taskData as TaskCreate);
+    }
+  };
+
   const handleDeleteTask = async (taskId: number) => {
     try {
       await taskApi.deleteTask(taskId);
@@ -178,7 +188,7 @@ export default function DashboardPage() {
                 <Select
                   label="Filter by Status"
                   value={filter}
-                  onChange={(value: 'all' | 'pending' | 'completed') => setFilter(value)}
+                  onChange={(value: any) => setFilter(value as 'all' | 'pending' | 'completed')}
                   options={[
                     { value: 'all', label: 'All Tasks' },
                     { value: 'pending', label: 'Pending' },
@@ -190,7 +200,7 @@ export default function DashboardPage() {
                 <Select
                   label="Sort by"
                   value={sort}
-                  onChange={(value: 'created' | 'title') => setSort(value)}
+                  onChange={(value: any) => setSort(value as 'created' | 'title')}
                   options={[
                     { value: 'created', label: 'Date Created' },
                     { value: 'title', label: 'Title' }
@@ -203,7 +213,7 @@ export default function DashboardPage() {
               <div className="mb-6">
                 <TaskForm
                   task={editingTask || undefined}
-                  onSubmit={editingTask ? handleUpdateTask : handleCreateTask}
+                  onSubmit={handleSubmitTask}
                   onCancel={() => {
                     setShowForm(false);
                     setEditingTask(null);
