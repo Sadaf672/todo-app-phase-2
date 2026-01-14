@@ -168,6 +168,7 @@ Thumbs.db
 .next/
 out/
 .next/cache/
+.next/cache/turbopack/
 
 # Dependencies
 node_modules/
@@ -176,6 +177,22 @@ node_modules/
 .env.local
 *.log
 
-node_modules/
+# Build outputs
+dist/
+build/
+coverage/
+.nyc_output/
+*.log
 
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment variables
 .env*
+!.env.example
