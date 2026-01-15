@@ -17,8 +17,14 @@ if not DATABASE_URL:
 # Print DATABASE_URL for debugging (remove in production)
 print(f"DATABASE_URL: {DATABASE_URL}")
 
-# Create the engine
-engine = create_engine(DATABASE_URL, echo=True)
+# Create the engine with proper parameters for Neon/PostgreSQL compatibility
+# Removed statement_timeout option as it's not supported by Neon in pooled connections
+engine = create_engine(
+    DATABASE_URL,
+    echo=True,
+    pool_pre_ping=True,  # Verify connections before use
+    # For Neon compatibility, avoid using options that aren't supported
+)
 
 
 @contextmanager

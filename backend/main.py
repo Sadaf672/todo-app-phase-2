@@ -94,7 +94,11 @@ app.add_middleware(
 @app.on_event("startup")
 async def on_startup():
     """Initialize database tables when the app starts"""
-    create_tables()
+    import asyncio
+    from db_init_with_retry import create_tables_with_retry
+    # Add a small delay to ensure DB connection is ready
+    await asyncio.sleep(1)
+    create_tables_with_retry()
 
 # Include routers
 app.include_router(tasks_router, prefix="/api", tags=["tasks"])
